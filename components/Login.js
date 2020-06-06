@@ -125,8 +125,6 @@ export default class Login extends Component {
                     <Text style={styles.loginButtonText}>LOGIN</Text>
                 </TouchableOpacity>
             </View>
-            <Text>{"username entered "+ this.state.username}</Text>
-            <Text>{"password entered "+ this.state.password}</Text>
                 </View>
               </View>
             </ImageBackground>    
