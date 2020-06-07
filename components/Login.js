@@ -16,7 +16,8 @@ export default class Login extends Component {
             username:'',
             password:'',
             showPass: true,
-            press:false
+            press:false,
+            isAdmin: false
         };
     }
     showPass = () =>{
@@ -29,7 +30,6 @@ export default class Login extends Component {
     }
     validation=() =>{
         const{
-
             username,password
         } = this.state
         if(username=='' || password=='')
@@ -39,6 +39,7 @@ export default class Login extends Component {
         }
         else if(username=='admin' && password=='admin'){
             console.log('validation successful')
+            this.setState({isAdmin:true})
             return true;
         }
         else{
@@ -49,7 +50,13 @@ export default class Login extends Component {
     navigateToHome=()=>{
         if(this.validation())
         {
-            this.props.navigation.navigate("Home",{username:this.state.username});
+            if(this.state.isAdmin){
+                this.props.navigation.navigate("AdminHome",{username:this.state.username});
+            }
+            else{
+                this.props.navigation.navigate("Home",{username:this.state.username});
+            }
+            
         }
     }
     render(){
