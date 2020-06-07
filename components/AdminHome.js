@@ -11,22 +11,9 @@ export default class Home extends Component {
     
     constructor(props) {
         super(props);
-        this.state = {
-            isTorchOn: false,
-            
+        this.state = {            
         };
     }
-    panicPressed = () => {
-        //alert('Panic Pressed');
-        new Panic().panicPressed();
-    }
-    // flashPressed = () => {
-    //     alert('Flash Pressed');
-    //     const { isTorchOn } = this.state;
-    //     Torch.switchState(!isTorchOn);
-    //     this.setState({ isTorchOn: !isTorchOn });
-    // }
-    //const user_name = route.params.username;
     render() {
         const params = this.props.route.params;
         const user_name = params.username
@@ -35,69 +22,34 @@ export default class Home extends Component {
                 {<Text>Hello {user_name}</Text>}
                 <View style={styles.gridContainer}>
                     <View style={styles.rowContainer}>
-
                         <View style={styles.item}>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ClockInOut', { username: user_name, age: 16 }) }}>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('RegisterUser', { username: user_name, age: 16 }) }}>
                                 <Image
                                     style={styles.image}
-                                    source={require('../assets/timeClock.png')}
+                                    source={require('../assets/registerUser.jpg')}
                                 />
                             </TouchableOpacity>
                         </View>
-
                         <View style={styles.item}>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ViewSchedule', { username: user_name, age: 16 }) }}>
+                            <TouchableOpacity onPress={() => {this.props.navigation.navigate("ViewReports")}}>
                                 <Image
                                     style={styles.image}
-                                    source={require('../assets/createSchedule.jpg')}
+                                    source={require('../assets/viewReports.png')}
                                 />
                             </TouchableOpacity>
                         </View>
 
                     </View>
-
-
-
                     <View style={styles.rowContainer}>
-
                         <View style={styles.item}>
-                            <TouchableOpacity onPress={() => {this.props.navigation.navigate("Flash")}}>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('CreateSchedule', { username: user_name }) }}>
                                 <Image
                                     style={styles.image}
-                                    source={require('../assets/flashlight.png')}
+                                    source={require('../assets/createSchedule.png')}
                                 />
                             </TouchableOpacity>
                         </View>
-
-                        <View style={styles.item}>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('Reports', { username: user_name }) }}>
-                                <Image
-                                    style={styles.image}
-                                    source={require('../assets/reports.png')}
-                                />
-                            </TouchableOpacity>
-                        </View>
-
                     </View>
-
-
-
-                    <View style={styles.rowContainer}>
-
-                        <View style={styles.item}>
-                            <TouchableOpacity onPress={this.panicPressed}>
-                                <Image
-                                    style={styles.image}
-                                    source={require('../assets/panic.png')}
-                                />
-                            </TouchableOpacity>
-                        </View>
-
-
-
-                    </View>
-
-
                 </View>
             </View>
         );
