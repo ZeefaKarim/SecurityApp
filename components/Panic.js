@@ -13,7 +13,6 @@ export default class Panic extends React.Component{
   }
   //const user_name = route.params.username;
   //checking  my git from VS code
-
 }
 
 //export default Panic;

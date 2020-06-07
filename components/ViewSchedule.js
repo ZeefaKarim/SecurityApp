@@ -11,18 +11,9 @@ export default class extends React.Component{
   render(){
     const params = this.props.route.params;
     const user_name = params.username
-    let data=[{
-      value:'Zeefa'},
-      {value:'Saim'},
-      {value:'Suhail' 
-    }];
     return (
      <View style={StyleSheet.dropdown}>
-         <Text>CreateSchedule {user_name} </Text>
-         <Dropdown
-         label='Name'
-         data={data}
-         />
+         <Text>View Schedule {user_name} </Text>
      </View>
    );
   }
