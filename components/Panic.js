@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React,{Component} from 'react';
 import { Button, View, Text,Alert } from 'react-native';
 
 
-class Panic extends React.Component{
+export default class Panic extends React.Component{
   panicPressed(){
     alert('Panic Pressed now');
   }
@@ -16,4 +16,4 @@ class Panic extends React.Component{
 
 }
 
-export default Panic;
+//export default Panic;
