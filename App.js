@@ -8,6 +8,8 @@ import CreateSchedule from './components/CreateSchedule';
 import ClockInOut from './components/ClockInOut';
 import Reports from './components/Reports'
 import Panic from './components/Panic';
+import Flash from './components/Flash';
+
 
 
 const Stack = createStackNavigator();
@@ -22,6 +24,7 @@ function App() {
         <Stack.Screen name="ClockInOut" component={ClockInOut} />
         <Stack.Screen name="Reports" component={Reports} />
         <Stack.Screen name="Panic" component={Panic} />
+        <Stack.Screen name="Flash" component={Flash} />
       </Stack.Navigator>
     </NavigationContainer>
   );

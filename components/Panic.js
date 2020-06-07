@@ -2,12 +2,17 @@ import * as React from 'react';
 import { Button, View, Text,Alert } from 'react-native';
 
 
-function Panic({ navigation,route}) {
-   const user_name = route.params.username;
-    return (
-        Console.log('Inside Panic')
-        //alert('Panic Pressed')
+class Panic extends React.Component{
+  panicPressed(){
+    alert('Panic Pressed now');
+  }
+  render(){
+    return(
+      console.log('fs')
     );
   }
+  //const user_name = route.params.username;
 
-  export default Panic
+}
+
+export default Panic;

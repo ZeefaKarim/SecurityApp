@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View,Image, ImageBackground, Dimensions, StatusBar, TouchableOpacity, TextInput } from 'react-native';
-import LoginForm from './LoginForm.js'
+//import LoginForm from './LoginForm.js'
 import Icon from 'react-native-vector-icons/Ionicons'
 import bgImage from '../assets/background.png'
 import logo from '../assets/logo1.png'
@@ -64,7 +64,7 @@ export default class Login extends Component {
                     style={styles.logo}
                     source={logo}  
                 />
-                <Text style={styles.logoText}>SECURITY APP!!!</Text>
+                <Text style={styles.logoText}>SECURITY APP</Text>
                 </View>
                 <View style={styles.formContainer}>
                 <View style={styles.container}>
@@ -82,7 +82,7 @@ export default class Login extends Component {
                     //value = {postText}
                     //onChangeText={setPostText}
                     onChangeText={(value) => this.setState({username:value})}
-                    placeholder={"Email Id"}
+                    placeholder={"Email"}
                     placeholderTextColor = 'rgba(25,255,255,0.7)'
                     keyboardType="email-address"
                     //selectionColor={'black'}
@@ -102,7 +102,7 @@ export default class Login extends Component {
                         style= {styles.inputIcon}
                     />
                     <TextInput
-                        placeholder={"password!!!"}
+                        placeholder={"password"}
                         secureTextEntry= {this.state.showPass}
                         placeholderTextColor = 'rgba(25,255,255,0.7)'
                         onChangeText={(value) => this.setState({password:value})}
