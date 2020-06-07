@@ -32,7 +32,7 @@ export default class Home extends Component {
         const user_name = params.username
         return (
             <View style={styles.container}>
-                {<Text>Hello {user_name}</Text>}
+                {<Text>normal home {user_name}</Text>}
                 <View style={styles.gridContainer}>
                     <View style={styles.rowContainer}>
 

@@ -39,18 +39,19 @@ export default class Login extends Component {
         }
         else if(username=='admin' && password=='admin'){
             console.log('validation successful')
-            this.setState({isAdmin:true})
+            this.state.isAdmin=true;
             return true;
         }
         else{
-            alert('username and password incorrect');
-            return false;
+            return true;
         }
     }
     navigateToHome=()=>{
         if(this.validation())
         {
+            console.log(this.state.admin);
             if(this.state.isAdmin){
+                
                 this.props.navigation.navigate("AdminHome",{username:this.state.username});
             }
             else{

@@ -7,7 +7,7 @@ import { Button, View, Text, Tab, Navigator, StyleSheet, Image, TouchableOpacity
 // import ReportsLogs from './ReportsLogs';
  import Panic from './Panic'
 
-export default class Home extends Component {
+export default class AdminHome extends Component {
     
     constructor(props) {
         super(props);
@@ -19,14 +19,14 @@ export default class Home extends Component {
         const user_name = params.username
         return (
             <View style={styles.container}>
-                {<Text>Hello {user_name}</Text>}
+                {<Text>admin home {user_name}</Text>}
                 <View style={styles.gridContainer}>
                     <View style={styles.rowContainer}>
                         <View style={styles.item}>
                             <TouchableOpacity onPress={() => { this.props.navigation.navigate('RegisterUser', { username: user_name, age: 16 }) }}>
                                 <Image
                                     style={styles.image}
-                                    source={require('../assets/registerUser.jpg')}
+                                    source={require('../assets/registerUser.png')}
                                 />
                             </TouchableOpacity>
                         </View>
@@ -45,7 +45,7 @@ export default class Home extends Component {
                             <TouchableOpacity onPress={() => { this.props.navigation.navigate('CreateSchedule', { username: user_name }) }}>
                                 <Image
                                     style={styles.image}
-                                    source={require('../assets/createSchedule.png')}
+                                    source={require('../assets/createSchedule.jpg')}
                                 />
                             </TouchableOpacity>
                         </View>

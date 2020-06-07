@@ -9,6 +9,7 @@ import ClockInOut from './components/ClockInOut';
 import Reports from './components/Reports'
 import Panic from './components/Panic';
 import Flash from './components/Flash';
+import AdminHome from './components/AdminHome';
 
 
 
@@ -20,6 +21,7 @@ function App() {
       <Stack.Navigator>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="AdminHome" component={AdminHome} />
         <Stack.Screen name="CreateSchedule" component={CreateSchedule} />
         <Stack.Screen name="ClockInOut" component={ClockInOut} />
         <Stack.Screen name="Reports" component={Reports} />
