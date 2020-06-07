@@ -1,9 +1,12 @@
-import * as React from 'react';
+import React,{Component} from 'react';
 import { Button, View, Text } from 'react-native';
 
 
-function Reports({ navigation,route}) {
-   const user_name = route.params.username;
+export default class Reports extends Component {
+   render(){
+    const params = this.props.route.params;
+    const user_name = params.username
+    
    
     return (
       <View>
@@ -12,6 +15,7 @@ function Reports({ navigation,route}) {
 
 
     );
+   }
   }
 
-  export default Reports
+//export default Reports
