@@ -4,14 +4,34 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, HeaderHeightContext } from '@react-navigation/stack';
 import CreateSchedule from './CreateSchedule';
 import ReportsLogs from './ReportsLogs';
-import Panic from './Panic'
+import Panic from './Panic';
+import SendSMS from 'react-native-sms';
 
 
 function Home({navigation,route}) {
     
     panicPressed=()=>{
-        //alert('Panic Pressed');
-        <Panic/>
+        //alert('Panic Pressed')
+        SendSMS.send({
+            //Message body
+            body: 'Test Message from React',
+            //Recipients Number
+            recipients: ['+15197819206'],
+            //An array of types that would trigger a "completed" response when using android
+            successTypes: ['sent', 'queued']
+        }, (completed, cancelled, error) => {
+            if(completed){
+              Console.log('SMS Sent Completed');
+            }else if(cancelled){
+              Console.log('SMS Sent Cancelled');
+            }else if(error){
+              Console.log('Some error occurred');
+            }
+            else{
+                Console.log('nothing happened')
+            }
+        });
+        
     }
         
         const user_name = route.params.username;
