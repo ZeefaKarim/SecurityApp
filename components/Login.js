@@ -43,101 +43,90 @@ export default class Login extends Component {
             return true;
         }
         else{
+            this.state.isAdmin=false;
             return true;
         }
     }
     navigateToHome=()=>{
         if(this.validation())
         {
-            console.log(this.state.admin);
-            if(this.state.isAdmin){
-                
-                this.props.navigation.navigate("AdminHome",{username:this.state.username});
-            }
-            else{
-                this.props.navigation.navigate("Home",{username:this.state.username});
-            }
-            
+            this.state.isAdmin ? this.props.navigation.navigate("AdminHome",{username:this.state.username}) : this.props.navigation.navigate("Home",{username:this.state.username});
         }
     }
     render(){
         const { navigate } = this.props.navigation;  
-        //const [postText, setPostText] = React.useState('');
-        return (
-        
-            <ImageBackground source={bgImage} style={styles.backgroundContainer}>    
-              <View style={styles.mainView}>
-                <View style={styles.logoContainer}>
-                <Image
-                    style={styles.logo}
-                    source={logo}  
-                />
-                <Text style={styles.logoText}>SECURITY APP</Text>
-                </View>
-                <View style={styles.formContainer}>
-                <View style={styles.container}>
-                <StatusBar
-                barStyle="light-content"
-                />
-                <View>
-                    <Icon 
-                    name={'ios-person'}
-                    size={28}
-                    color={'rgba(255,255,255,0.7)'}
-                    style= {styles.inputIcon}
+        return (      
+           <ImageBackground source={bgImage} style={styles.backgroundContainer}>    
+                <View style={styles.mainView}>
+                    <View style={styles.logoContainer}>
+                        <Image
+                            style={styles.logo}
+                            source={logo}  
+                        />
+                        <Text style={styles.logoText}>SECURITY APP</Text>
+                    </View>
+                    <View style={styles.formContainer}>
+                    <View style={styles.container}>
+                    <StatusBar
+                        barStyle="light-content"
                     />
-                    <TextInput
+                    <View>
+                        <Icon 
+                            name={'ios-person'}
+                            size={28}
+                            color={'rgba(255,255,255,0.7)'}
+                            style= {styles.inputIcon}
+                        />
+                        <TextInput
                     //value = {postText}
                     //onChangeText={setPostText}
-                    onChangeText={(value) => this.setState({username:value})}
-                    placeholder={"Email"}
-                    placeholderTextColor = 'rgba(25,255,255,0.7)'
-                    keyboardType="email-address"
+                         onChangeText={(value) => this.setState({username:value})}
+                         placeholder={"Email"}
+                         placeholderTextColor = 'rgba(25,255,255,0.7)'
+                         keyboardType="email-address"
                     //selectionColor={'black'}
                     //returnKeyType= "next"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    onSubmitEditing= {()=> this.passwordInput.focus()}
-                    style={styles.input}
-                    />
-                </View>
+                         autoCapitalize="none"
+                         autoCorrect={false}
+                         onSubmitEditing= {()=> this.passwordInput.focus()}
+                         style={styles.input}
+                        />
+                    </View>
                 
-                <View>
-                    <Icon 
-                        name={'ios-lock'}
-                        size={28}
-                        color={'rgba(255,255,255,0.7)'}
-                        style= {styles.inputIcon}
-                    />
-                    <TextInput
-                        placeholder={"password"}
-                        secureTextEntry= {this.state.showPass}
-                        placeholderTextColor = 'rgba(25,255,255,0.7)'
-                        onChangeText={(value) => this.setState({password:value})}
-
+                    <View>
+                        <Icon 
+                            name={'ios-lock'}
+                            size={28}
+                            color={'rgba(255,255,255,0.7)'}
+                            style= {styles.inputIcon}
+                        />
+                        <TextInput
+                            placeholder={"password"}
+                            secureTextEntry= {this.state.showPass}
+                            placeholderTextColor = 'rgba(25,255,255,0.7)'
+                            onChangeText={(value) => this.setState({password:value})}
                         //returnKeyType='go'
                        // ref={(input)=> this.passwordInput = input}
-                        style={styles.input}
-                    />
-                     <TouchableOpacity style={styles.eyeBtn} onPress={this.showPass.bind(this)}>
-                    <Icon 
-                    name={this.state.press == false ? 'ios-eye-off' : 'ios-eye' }
-                    size={26}
-                    color={'rgba(255,255,255,0.7)'}
-                    />
-                </TouchableOpacity>
+                            style={styles.input}
+                        />
+                        <TouchableOpacity style={styles.eyeBtn} onPress={this.showPass.bind(this)}>
+                            <Icon 
+                                name={this.state.press == false ? 'ios-eye-off' : 'ios-eye' }
+                                size={26}
+                                color={'rgba(255,255,255,0.7)'}
+                            />
+                        </TouchableOpacity>
             
+                    </View>
+                    <TouchableOpacity style={styles.loginButtonContainer} onPress={()=>this.navigateToHome()}>
+                        <Text style={styles.loginButtonText}>LOGIN</Text>
+                    </TouchableOpacity>
                 </View>
-    
-                <TouchableOpacity style={styles.loginButtonContainer} onPress={()=>this.navigateToHome()}>
-                    <Text style={styles.loginButtonText}>LOGIN</Text>
-                </TouchableOpacity>
             </View>
-                </View>
-              </View>
-            </ImageBackground>    
-          );
-    }      
+        </View>
+    </ImageBackground>    
+);
+}      
 }
 
 const styles = StyleSheet.create({

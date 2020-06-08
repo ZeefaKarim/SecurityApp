@@ -10,6 +10,7 @@ import Reports from './components/Reports'
 import Panic from './components/Panic';
 import Flash from './components/Flash';
 import AdminHome from './components/AdminHome';
+import RegisterUser from './components/RegisterUser';
 
 
 
@@ -27,6 +28,7 @@ function App() {
         <Stack.Screen name="Reports" component={Reports} />
         <Stack.Screen name="Panic" component={Panic} />
         <Stack.Screen name="Flash" component={Flash} />
+        <Stack.Screen name="RegisterUser" component={RegisterUser}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
