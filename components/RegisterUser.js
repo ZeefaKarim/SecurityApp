@@ -4,16 +4,72 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 export default class RegisterUser extends React.Component {
+    
+  constructor(props){
+    super(props);
+    this.state={
+      newName:"",
+      newEmail:"",
+      newpassword:"",
+      newconfirmpassword:""
+    }
+  }
+
+  inputValidation = () =>{
+    console.log ("Name: ", this.state.newName);
+    console.log ("Email: ", this.state.newEmail);
+    console.log ("newpasswoprd: ", this.state.newpassword);
+    console.log ("confirm passwprd: ", this.state.newconfirmpassword);
+    
+    
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+    
+    if(this.state.newName == "" || this.state.newEmail == "" || this.state.newpassword == "" || this.state.newconfirmpassword == ""){
+      alert('all fields are mandatory');
+    }
+    else if (this.state.newpassword != this.state.newconfirmpassword){
+      alert('both password shoould be same');
+    }
+    else if(reg.test(this.state.newEmail) === false){
+      alert('Email invalid');      
+    }
+    else if(this.state.newpassword.length < 5){
+      alert('Password length should be min 5 charecters')
+    }
+    else{
+      alert('regiter is pressed after succesful validations');
+    }
+
+  }
+    
     render(){
       return (
         <KeyboardAwareScrollView enableOnAndroid  style={styles.container}>
             <View style={styles.formContainer}>
                 <Text style={styles.header}>Register a Guard</Text>
-                <TextInput style={styles.textInput} placeholder="Enter name"/>
-                <TextInput style={styles.textInput} placeholder="Enter email"/>
-                <TextInput style={styles.textInput} secureTextEntry={true} placeholder="Enter password"/>
-                <TextInput style={styles.textInput} secureTextEntry={true} placeholder="Confirm password"/>
-                <TouchableOpacity style={styles.loginButton}>
+                <TextInput
+                 style={styles.textInput} 
+                 placeholder="Enter name"
+                 onChangeText={(value) => this.setState({newName:value})}
+                />
+                <TextInput 
+                  style={styles.textInput} 
+                  placeholder="Enter email"
+                  onChangeText={(value) => this.setState({newEmail:value})}
+                />
+                <TextInput 
+                  style={styles.textInput} 
+                  secureTextEntry={true} 
+                  placeholder="Enter password"
+                  onChangeText={(value) => this.setState({newpassword:value})}
+                  />
+                <TextInput 
+                  style={styles.textInput} 
+                  secureTextEntry={true} 
+                  placeholder="Confirm password"
+                  onChangeText={(value) => this.setState({newconfirmpassword:value})}
+                  />
+                <TouchableOpacity style={styles.loginButton} onPress={()=> this.inputValidation()}>
                     <Text style={styles.buttonText}>Register</Text>
                 </TouchableOpacity>
             </View>
