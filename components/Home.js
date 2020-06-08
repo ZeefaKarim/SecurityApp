@@ -43,7 +43,7 @@ export default class Home extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.RightItem}>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ViewSchedule', { username: user_name, age: 16 }) }}>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ViewSchedule', { username: user_name}) }}>
                                 <Image
                                     style={styles.image}
                                     source={require('../assets/createSchedule.jpg')}
@@ -77,7 +77,7 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#DAE0E2',
         alignItems: 'center',
         justifyContent: 'center',
     
@@ -100,8 +100,9 @@ const styles = StyleSheet.create({
     image: {
         width: 150,
         height: 150,
-        borderWidth:1,
-        borderColor:'#ff4'
+        borderWidth:2,
+        borderColor:'#000',
+        borderRadius:10,
     },
     LeftItem:{
         marginLeft:0,

@@ -78,21 +78,16 @@ export default class Login extends Component {
                             style= {styles.inputIcon}
                         />
                         <TextInput
-                    //value = {postText}
-                    //onChangeText={setPostText}
                             onChangeText={(value) => this.setState({username:value})}
                             placeholder={"Email"}
                             placeholderTextColor = 'rgba(25,255,255,0.7)'
                             keyboardType="email-address"
-                    //selectionColor={'black'}
-                    //returnKeyType= "next"
                             autoCapitalize="none"
                             autoCorrect={false}
                             onSubmitEditing= {()=> this.passwordInput.focus()}
                             style={styles.input}
                         />
-                    </View>
-                
+                    </View>               
                     <View>
                         <Icon 
                             name={'ios-lock'}
@@ -105,8 +100,6 @@ export default class Login extends Component {
                             secureTextEntry= {this.state.showPass}
                             placeholderTextColor = 'rgba(25,255,255,0.7)'
                             onChangeText={(value) => this.setState({password:value})}
-                        //returnKeyType='go'
-                       // ref={(input)=> this.passwordInput = input}
                             style={styles.input}
                         />
                         <TouchableOpacity style={styles.eyeBtn} onPress={this.showPass.bind(this)}>

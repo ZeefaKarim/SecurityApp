@@ -8,7 +8,6 @@ export default class RegisterUser extends React.Component {
       return (
         <KeyboardAwareScrollView enableOnAndroid  style={styles.container}>
             <View style={styles.formContainer}>
-                <Text style={styles.header}>Register a Guard</Text>
                 <TextInput style={styles.textInput} placeholder="Enter name"/>
                 <TextInput style={styles.textInput} placeholder="Enter email"/>
                 <TextInput style={styles.textInput} secureTextEntry={true} placeholder="Enter password"/>
