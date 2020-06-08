@@ -66,11 +66,11 @@ export default class Login extends Component {
                         <Text style={styles.logoText}>SECURITY APP</Text>
                     </View>
                     <View style={styles.formContainer}>
-                    <View style={styles.container}>
-                    <StatusBar
-                        barStyle="light-content"
-                    />
-                    <View>
+                        <View style={styles.container}>
+                        <StatusBar
+                            barStyle="light-content"
+                        />
+                        <View>
                         <Icon 
                             name={'ios-person'}
                             size={28}
@@ -80,16 +80,16 @@ export default class Login extends Component {
                         <TextInput
                     //value = {postText}
                     //onChangeText={setPostText}
-                         onChangeText={(value) => this.setState({username:value})}
-                         placeholder={"Email"}
-                         placeholderTextColor = 'rgba(25,255,255,0.7)'
-                         keyboardType="email-address"
+                            onChangeText={(value) => this.setState({username:value})}
+                            placeholder={"Email"}
+                            placeholderTextColor = 'rgba(25,255,255,0.7)'
+                            keyboardType="email-address"
                     //selectionColor={'black'}
                     //returnKeyType= "next"
-                         autoCapitalize="none"
-                         autoCorrect={false}
-                         onSubmitEditing= {()=> this.passwordInput.focus()}
-                         style={styles.input}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            onSubmitEditing= {()=> this.passwordInput.focus()}
+                            style={styles.input}
                         />
                     </View>
                 
@@ -116,7 +116,6 @@ export default class Login extends Component {
                                 color={'rgba(255,255,255,0.7)'}
                             />
                         </TouchableOpacity>
-            
                     </View>
                     <TouchableOpacity style={styles.loginButtonContainer} onPress={()=>this.navigateToHome()}>
                         <Text style={styles.loginButtonText}>LOGIN</Text>
@@ -128,7 +127,6 @@ export default class Login extends Component {
 );
 }      
 }
-
 const styles = StyleSheet.create({
     backgroundContainer: {
       flex: 1,
@@ -157,8 +155,7 @@ const styles = StyleSheet.create({
     },
     formContainer:{
         width: Width -55,
-        height:200,
-        
+        height:200,   
     },
     input:{
       height:40,
