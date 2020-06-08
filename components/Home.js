@@ -17,7 +17,6 @@ export default class Home extends Component {
         };
     }
     panicPressed = () => {
-        //alert('Panic Pressed');
         new Panic().panicPressed();
     }
     // flashPressed = () => {
@@ -32,11 +31,10 @@ export default class Home extends Component {
         const user_name = params.username
         return (
             <View style={styles.container}>
-                {<Text>normal home {user_name}</Text>}
+                {<Text style={styles.welcome}>Hello {user_name}</Text>}
                 <View style={styles.gridContainer}>
                     <View style={styles.rowContainer}>
-
-                        <View style={styles.item}>
+                        <View style={styles.LeftItem}>
                             <TouchableOpacity onPress={() => { this.props.navigation.navigate('ClockInOut', { username: user_name, age: 16 }) }}>
                                 <Image
                                     style={styles.image}
@@ -44,47 +42,17 @@ export default class Home extends Component {
                                 />
                             </TouchableOpacity>
                         </View>
-
-                        <View style={styles.item}>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ViewSchedule', { username: user_name, age: 16 }) }}>
+                        <View style={styles.RightItem}>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ViewSchedule', { username: user_name}) }}>
                                 <Image
                                     style={styles.image}
                                     source={require('../assets/createSchedule.jpg')}
                                 />
                             </TouchableOpacity>
                         </View>
-
                     </View>
-
-
-
-                    <View style={styles.rowContainer}>
-
-                        <View style={styles.item}>
-                            <TouchableOpacity onPress={() => {this.props.navigation.navigate("Flash")}}>
-                                <Image
-                                    style={styles.image}
-                                    source={require('../assets/flashlight.png')}
-                                />
-                            </TouchableOpacity>
-                        </View>
-
-                        <View style={styles.item}>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('Reports', { username: user_name }) }}>
-                                <Image
-                                    style={styles.image}
-                                    source={require('../assets/reports.png')}
-                                />
-                            </TouchableOpacity>
-                        </View>
-
-                    </View>
-
-
-
-                    <View style={styles.rowContainer}>
-
-                        <View style={styles.item}>
+                    <View style={styles.bottomRowContainer}>
+                        <View style={styles.LeftItem}>
                             <TouchableOpacity onPress={this.panicPressed}>
                                 <Image
                                     style={styles.image}
@@ -92,12 +60,15 @@ export default class Home extends Component {
                                 />
                             </TouchableOpacity>
                         </View>
-
-
-
+                        <View style={styles.RightItem}>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('Reports', { username: user_name }) }}>
+                                <Image
+                                    style={styles.image}
+                                    source={require('../assets/reports.png')}
+                                />
+                            </TouchableOpacity>
+                        </View>
                     </View>
-
-
                 </View>
             </View>
         );
@@ -106,23 +77,42 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#DAE0E2',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+    
     },
     gridContainer: {
         flex: 1,
         margin: 5,
-
+        marginTop:25,
+    },
+    welcome:{
+        fontSize:24,
+        borderBottomWidth:1,
+        marginTop:20,
+        fontWeight:'bold'
     },
     rowContainer: {
         flexDirection: "row",
+        marginTop:40,
     },
     image: {
         width: 150,
         height: 150,
+        borderWidth:2,
+        borderColor:'#000',
+        borderRadius:10,
+    },
+    LeftItem:{
+        marginLeft:0,
+    },
+    RightItem:{
+        marginLeft:40,
+    },
+    bottomRowContainer:{
+        flexDirection: "row",
+        marginTop:100,
+        marginBottom:0,
     }
-
 });
-
-  //export default Home
