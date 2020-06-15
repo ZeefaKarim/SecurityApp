@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import bgImage from '../assets/background.png'
 import logo from '../assets/logo1.png'
 import Home from './Home.js';
+import * as firebase from "firebase";
 
 const {width:Width} = Dimensions.get('window')
 
@@ -20,6 +21,12 @@ export default class Login extends Component {
             isAdmin: false
         };
     }
+
+    static navigationOptions = {
+        title: "Login Page",
+        headerLeft: null
+      }
+
     showPass = () =>{
         if(this.state.press === false){
             this.setState({showPass:false, press:true})
@@ -44,13 +51,28 @@ export default class Login extends Component {
         }
         else{
             this.state.isAdmin=false;
+            console.log('validation successful (non-admin)')
             return true;
+            
         }
     }
     navigateToHome=()=>{
         if(this.validation())
         {
-            this.state.isAdmin ? this.props.navigation.navigate("AdminHome",{username:this.state.username}) : this.props.navigation.navigate("Home",{username:this.state.username});
+            if(this.state.isAdmin){
+                this.props.navigation.navigate("AdminHome",{username:this.state.username})
+            }
+            else{
+                firebase.auth().signInWithEmailAndPassword(this.state.username,this.state.password)
+                .then(()=>{
+                    this.props.navigation.navigate("Home",{username:this.state.username})
+                })
+                .catch(error =>{
+                    console.log(error.message);
+                    alert('email or password is incorrect')
+                })
+            }
+            //this.state.isAdmin ? this.props.navigation.navigate("AdminHome",{username:this.state.username}) : this.props.navigation.navigate("Home",{username:this.state.username});
         }
     }
     render(){

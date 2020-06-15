@@ -1,6 +1,8 @@
 import Torch from 'react-native-torch';
 import React, { Component } from 'react';
-import { Button, View, Text, Tab, Navigator, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Tab, Navigator, StyleSheet, Image, TouchableOpacity, BackHandler } from 'react-native';
+import {Button} from 'native-base'
+import * as firebase from "firebase";
 //import { NavigationContainer } from '@react-navigation/native';
 //import { createStackNavigator, HeaderHeightContext } from '@react-navigation/stack';
 // import CreateSchedule from './CreateSchedule';
@@ -13,9 +15,45 @@ export default class Home extends Component {
         super(props);
         this.state = {
             isTorchOn: false,
+            name:"",
+            email:""
             
         };
     }
+
+    static navigationOptions = {
+        title: "Home",
+        header: null
+      }
+
+    componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress',function(){
+            return true;
+        }); 
+    }  
+
+    componentDidMount(){
+        firebase.auth().onAuthStateChanged(authenticate =>{
+            if(authenticate){
+                this.setState({
+                    email: authenticate.email,
+                    name: authenticate.displayName
+                });
+            }
+            else{
+                this.props.navigation.replace("Login");
+            }
+        })
+    }
+
+    signOutPressed = () =>{
+        firebase.auth().signOut()
+        .then(()=>console.log("signout"))
+        .catch(error =>{
+            alert(error.message)
+        })
+    }
+
     panicPressed = () => {
         new Panic().panicPressed();
     }
@@ -31,7 +69,14 @@ export default class Home extends Component {
         const user_name = params.username
         return (
             <View style={styles.container}>
-                {<Text style={styles.welcome}>Hello {user_name}</Text>}
+                
+                <Button
+                style= {styles.logoutButton} full rounded success
+                onPress={()=>{this.signOutPressed()}}
+                >
+                <Text style = {styles.logoutButtonText}>SignOut</Text>
+                </Button>
+                {<Text style={styles.welcome}>Hello {this.state.name}</Text>}
                 <View style={styles.gridContainer}>
                     <View style={styles.rowContainer}>
                         <View style={styles.LeftItem}>
@@ -114,5 +159,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginTop:100,
         marginBottom:0,
+    },
+    logoutButton:{
+        marginTop: 1,
+        width:100,
+        alignSelf: "flex-end",
+    },
+    logoutButtonText:{
+        color: "#fff"
     }
 });
