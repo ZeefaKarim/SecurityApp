@@ -1,6 +1,7 @@
 import Torch from 'react-native-torch';
 import React, { Component } from 'react';
-import { Button, View, Text, Tab, Navigator, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import {View, Text, Tab, Navigator, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import {Button} from 'native-base';
 //import { NavigationContainer } from '@react-navigation/native';
 //import { createStackNavigator, HeaderHeightContext } from '@react-navigation/stack';
 // import CreateSchedule from './CreateSchedule';
@@ -19,6 +20,9 @@ export default class AdminHome extends Component {
         const user_name = params.username
         return (
             <View style={styles.container}>
+                <Button style={styles.SignOut} full rounded success onPress={()=>{this.props.navigation.navigate('Login')}}>
+                    <Text style={styles.signOutText} >Sign Out</Text>
+                </Button>
                 {<Text style={styles.welcome}>Welcome {user_name}</Text>}
                 <View style={styles.gridContainer}>
                     <View style={styles.rowContainer}>
@@ -67,6 +71,22 @@ const styles = StyleSheet.create({
         flex: 1,
         margin: 5,
         marginTop:25,
+    },
+    SignOut:{
+        borderWidth:1,
+        marginTop:20,
+        borderRadius:5,
+        backgroundColor: '#0a2f91',
+        alignSelf:"flex-end",
+        marginRight:10,
+        width:70,
+    },
+    signOutText:{
+        color:'#fff',
+        fontWeight:'bold',
+        alignSelf:'center',
+        justifyContent:'center',
+        alignContent:'center',
     },
     welcome:{
         fontSize:24,

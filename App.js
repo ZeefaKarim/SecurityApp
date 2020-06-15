@@ -14,16 +14,13 @@ import RegisterUser from './components/RegisterUser';
 import ViewReports from './components/ViewReports';
 import ViewSchedule from './components/ViewSchedule';
 
-
-
 const Stack = createStackNavigator();
-
 function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{
         headerStyle: {
-          backgroundColor: '#2475B0',
+          backgroundColor: '#0a2f91',
         },
         headerTintColor: '#fff',
         headerTitleAlign:'center',
@@ -31,17 +28,17 @@ function App() {
           fontWeight: 'bold',
         },
       }}>
-        <Stack.Screen name="Login" options={{ title: 'Welcome' }} component={Login} />
-        <Stack.Screen name="Home" options={{ title: 'My Home' }} component={Home} />
-        <Stack.Screen name="AdminHome" options={{ title: 'Admin Home' }} component={AdminHome} />
-        <Stack.Screen name="CreateSchedule" options={{ title: 'Create Schedule' }} component={CreateSchedule} />
-        <Stack.Screen name="ClockInOut" options={{ title: 'Enter Your Time' }} component={ClockInOut} />
-        <Stack.Screen name="Reports" options={{ title: 'Write a Report' }} component={Reports} />
+        <Stack.Screen name="Login" options={{headerShown:false}} component={Login} />
+        <Stack.Screen name="Home" options={{headerShown:false}} component={Home} />
+        <Stack.Screen name="AdminHome" options={{headerShown:false}} component={AdminHome} />
+        <Stack.Screen name="CreateSchedule" options={{ title: 'Create Schedule'}} component={CreateSchedule} />
+        <Stack.Screen name="ClockInOut" options={{ title: 'Enter Your Time'}} component={ClockInOut} />
+        <Stack.Screen name="Reports" options={{ title: 'Write a Report'}} component={Reports} />
         <Stack.Screen name="Panic" component={Panic} />
         <Stack.Screen name="Flash" component={Flash} />
-        <Stack.Screen name="RegisterUser" options={{ title: 'Register a Guard' }} component={RegisterUser}/>
-        <Stack.Screen name="ViewReports" options={{ title: 'View Reports' }} component={ViewReports}/>
-        <Stack.Screen name="ViewSchedule" options={{ title: 'View Your Schedule' }} component={ViewSchedule}/>
+        <Stack.Screen name="RegisterUser" options={{ title: 'Register a Guard'}} component={RegisterUser}/>
+        <Stack.Screen name="ViewReports" options={{ title: 'View Reports'}} component={ViewReports}/>
+        <Stack.Screen name="ViewSchedule" options={{ title: 'View Your Schedule'}} component={ViewSchedule}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -9,6 +9,9 @@ import Home from './Home.js';
 const {width:Width} = Dimensions.get('window')
 
 export default class Login extends Component {
+    static navigationOptions={
+        header:null
+    }
 
     constructor(props){
         super(props);
@@ -17,7 +20,7 @@ export default class Login extends Component {
             password:'',
             showPass: true,
             press:false,
-            isAdmin: false
+            isAdmin: false,
         };
     }
     showPass = () =>{
