@@ -15,9 +15,9 @@ export default class Home extends Component {
             isTorchOn: false,       
         };
     }
-    panicPressed = () => {
-        new Panic().panicPressed();
-    }
+    // panicPressed = () => {
+    //     new Panic().panicPressed();
+    // }
     // flashPressed = () => {
     //     alert('Flash Pressed');
     //     const { isTorchOn } = this.state;
@@ -55,7 +55,7 @@ export default class Home extends Component {
                     </View>
                     <View style={styles.bottomRowContainer}>
                         <View style={styles.LeftItem}>
-                            <TouchableOpacity onPress={this.panicPressed}>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('Panic', { username: user_name}) }}>
                                 <Image
                                     style={styles.image}
                                     source={require('../assets/panic.png')}
