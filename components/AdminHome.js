@@ -32,6 +32,29 @@ export default class AdminHome extends Component {
                                     style={styles.image}
                                     source={require('../assets/registerUser.png')}
                                 />
+                                <Text style={styles.iconTitle}>Register Guard</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.RightItem}>
+                            <TouchableOpacity onPress={() => {this.props.navigation.navigate("UpdateUser")}}>
+                                <Image
+                                    style={styles.image}
+                                    source={require('../assets/updateRecords1.jpg')}
+                                    resizeMode= "stretch"
+                                />
+                                <Text style={styles.iconTitle}>Update Records</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
+                    <View style={styles.rowContainer}>
+                        <View style={styles.LeftItem}>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('CreateSchedule', { username: user_name }) }}>
+                                <Image
+                                    style={styles.image}
+                                    source={require('../assets/createSchedule.jpg')}
+                                />
+                                <Text style={styles.iconTitle}>Schedules</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.RightItem}>
@@ -40,20 +63,12 @@ export default class AdminHome extends Component {
                                     style={styles.image}
                                     source={require('../assets/viewReports.png')}
                                 />
+                                <Text style={styles.iconTitle}>View Reports</Text>
                             </TouchableOpacity>
                         </View>
 
                     </View>
-                    <View style={styles.bottomRowContainer}>
-                        <View style={styles.LeftItem}>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('CreateSchedule', { username: user_name }) }}>
-                                <Image
-                                    style={styles.image}
-                                    source={require('../assets/createSchedule.jpg')}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                    
                 </View>
             </View>
         );
@@ -116,6 +131,12 @@ const styles = StyleSheet.create({
         marginTop:100,
         marginBottom:0,
         alignSelf:'center'
+    },
+    iconTitle:{
+        alignSelf:"center",
+        color:'#000',
+        fontWeight:'bold',
+        fontSize: 15
     }
 });
 

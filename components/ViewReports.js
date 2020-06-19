@@ -8,8 +8,6 @@ export default class ViewReports extends Component {
       <View>
           <Text>View Report</Text>
       </View>
-
-
     );
    }
   }
