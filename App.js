@@ -14,6 +14,7 @@ import RegisterUser from './components/RegisterUser';
 import ViewReports from './components/ViewReports';
 import ViewSchedule from './components/ViewSchedule';
 import UpdateUser from './components/UpdateUser'
+import Schedule from './components/Schedule'
 
 const Stack = createStackNavigator();
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Stack.Screen name="Login" options={{headerShown:false}} component={Login} />
         <Stack.Screen name="Home" options={{headerShown:false}} component={Home} />
         <Stack.Screen name="AdminHome" options={{headerShown:false}} component={AdminHome} />
+        <Stack.Screen name="Schedule" options={{ title: 'Schedule'}} component={Schedule}/>
         <Stack.Screen name="CreateSchedule" options={{ title: 'Create Schedule'}} component={CreateSchedule} />
         <Stack.Screen name="ClockInOut" options={{ title: 'Enter Your Time'}} component={ClockInOut} />
         <Stack.Screen name="Reports" options={{ title: 'Write a Report'}} component={Reports} />
