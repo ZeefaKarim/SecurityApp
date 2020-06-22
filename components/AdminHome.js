@@ -12,15 +12,31 @@ export default class AdminHome extends Component {
     
     constructor(props) {
         super(props);
-        this.state = {            
+        this.state = { 
+            responseData:'',     
+           
         };
     }
+
+    UserLogout=async()=>{
+        await fetch("http://192.168.0.16:1234/users/logout", {
+             method: "DELETE"
+           }) 
+           .then((response) => response.text())
+           .then((responseData) => {
+             console.log(responseData)
+             this.setState({response:responseData})
+           })
+           .catch(error => console.log("Error : ",error))
+           this.props.navigation.navigate('Login')
+    }
+
     render() {
         const params = this.props.route.params;
         const user_name = params.username
         return (
             <View style={styles.container}>
-                <Button style={styles.SignOut} full rounded success onPress={()=>{this.props.navigation.navigate('Login')}}>
+                <Button style={styles.SignOut} full rounded success onPress={()=>{this.UserLogout()}}>
                     <Text style={styles.signOutText} >Sign Out</Text>
                 </Button>
                 {<Text style={styles.welcome}>Welcome {user_name}</Text>}

@@ -17,6 +17,7 @@ export default class RegisterUser extends React.Component {
       newPassword: "",
       newConfirmPassword: "",
       newPhoneNumber: "",
+      response:'',
      // isAdmin: false
     }
   }
@@ -28,18 +29,42 @@ export default class RegisterUser extends React.Component {
     this.refs[email].setNativeProps({text: ''});
     this.refs[password].setNativeProps({text: ''});
     this.refs[confirmPassword].setNativeProps({text: ''});
+    this.state.newFirstName=''
   }
 
-  inputValidation = (fname,lname,phoneNumber,email,password,confirmPassword) => {
-    console.log("Name: ", this.state.newFirstName);
-    console.log("Name: ", this.state.newLastName);
-    console.log("Email: ", this.state.newEmail);
-    console.log("newpasswoprd: ", this.state.newPassword);
-    console.log("confirm passwprd: ", this.state.newConfirmPassword);
-    //console.log("isAdmin status: ", this.state.isAdmin);
-    console.log("phone number: ", this.state.phoneNumber);
 
+  UserRegistration=async()=>{
+    await fetch("http://192.168.0.16:1234/users/register", {
+             method: "POST",
+             headers: {
+               'Accept': 'application/json',
+               'Content-Type': 'application/json'
+             },
+             body: JSON.stringify({
+              first_name:this.state.newFirstName,
+              last_name :this.state.newLastName,
+              email:this.state.newEmail,
+              password:this.state.newPassword,
+              phone:this.state.newPhoneNumber
+             })
+           }) 
+           .then((response) => response.text())
+           .then((responseData) => {
+             console.log(responseData)
+             this.setState({response:responseData})
+             console.log("After setting the state")
+           })
+           .catch(error => console.log("Error : ",error))
+  }
 
+  inputValidation = async(fname,lname,phoneNumber,email,password,confirmPassword) => {
+    // console.log("Name: ", this.state.newFirstName);
+    // console.log("Name: ", this.state.newLastName);
+    // console.log("Email: ", this.state.newEmail);
+    // console.log("New Password: ", this.state.newPassword);
+    // console.log("confirm password: ", this.state.newConfirmPassword);
+    // //console.log("isAdmin status: ", this.state.isAdmin);
+    // console.log("phone number: ", this.state.phoneNumber);
 
     let regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     let regPhone = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/;
@@ -48,30 +73,32 @@ export default class RegisterUser extends React.Component {
       alert('all fields are mandatory');
     }
     else if(this.state.newFirstName.length<2 || this.state.newLastName.length<2){
-      alert('Minimum 2 charecters for both first and last name');
+      alert('Minimum 2 characters for both first and last name');
     }
     else if (this.state.newPassword != this.state.newConfirmPassword) {
-      alert('both password shoould be same');
+      alert('both password should be same');
     }
     else if (regEmail.test(this.state.newEmail) === false) {
       alert('Email invalid');
     }
     else if (this.state.newPassword.length < 5) {
-      alert('Password length should be min 5 charecters')
+      alert('Password length should be min 5 characters')
     }
     else if(regPhone.test(this.state.newPhoneNumber) === false){
-      alert('Phone number invalid');
+      console.log(this.state.newPhoneNumber)
+      alert('Phone number invalid')
+
     }
     else {
       var formattedPhoneNumber = this.state.newPhoneNumber.replace(regPhone, "($1) $2-$3");
       console.log(formattedPhoneNumber);
       //this.setState({phoneNumber = formattedPhoneNumber});
       this.state.newPhoneNumber = formattedPhoneNumber;
-      alert('regiter is pressed after succesful validations');
-      this.clearFields('fname','lname','phoneNumber','email','password','confirmPassword');
-      
+      await this.UserRegistration();
+      alert(this.state.response);
+      //(this.state.response=='user is created successfully')
+      this.clearFields('fname','lname','phoneNumber','email','password','confirmPassword');     
     }
-
   }
 
   render() {
@@ -109,7 +136,7 @@ export default class RegisterUser extends React.Component {
           <TextInput
             style={styles.textInput}
             secureTextEntry={true}
-            placeholder="Enter Password (min 5 charechters)"
+            placeholder="Enter Password (min 5 characters)"
             ref={'password'}
             onChangeText={(value) => this.setState({ newPassword: value })}
           />

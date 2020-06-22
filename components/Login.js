@@ -15,13 +15,50 @@ export default class Login extends Component {
 
     constructor(props){
         super(props);
+        this.emailInput = React.createRef();
         this.state={
             username:'',
             password:'',
             showPass: true,
             press:false,
             isAdmin: false,
+            user:{},
+            userAuthenticated:false,
+
         };
+    }
+
+      userAuthentication=async(username,password)=>{
+            console.log('*************in userAuthentication fn***********************')
+            await fetch("http://192.168.0.16:1234/users/login", {
+             method: "POST",
+             headers: {
+               'Accept': 'application/json',
+               'Content-Type': 'application/json'
+             },
+             body: JSON.stringify({
+               email: username,
+               password: password,
+             })
+           })
+           .then((response) => response.json())
+           .then((responseData) => {
+            // console.log("Response data ",responseData)
+            // console.log("Before setting state of user",this.state.user)
+            // console.log("Before setting state of userAuthenticated",this.state.userAuthenticated)
+            //console.log("Response message : ",responseData.message)
+            if(responseData.message =="Incorrect Email or Password"){
+                this.setState({userAuthenticated:false})
+            }
+            else{
+                this.setState({user:responseData, userAuthenticated:true})
+            }
+             
+            //  console.log("After setting the state")
+            //  console.log("After setting state of user",this.state.user)
+            //  console.log("After setting state of userAuthenticated",this.state.userAuthenticated)
+           })
+           .catch(error => console.log("Caught Error: ",error))
     }
     showPass = () =>{
         if(this.state.press === false){
@@ -31,7 +68,8 @@ export default class Login extends Component {
             this.setState({showPass:true, press:false})
         }
     }
-    validation=() =>{
+     validation=async() =>{
+         //console.log("in validation")
         const{
             username,password
         } = this.state
@@ -40,20 +78,29 @@ export default class Login extends Component {
             alert('Username or password cannot be empty');
             return false;
         }
-        else if(username=='admin' && password=='admin'){
-            console.log('validation successful')
-            this.state.isAdmin=true;
-            return true;
-        }
         else{
-            this.state.isAdmin=false;
-            return true;
+            //console.log("in validation else..going in userAuthentication")
+            await this.userAuthentication(username, password)
+            //console.log("value of userAuthenticated back in validation after setting state",this.state.userAuthenticated)
+            if(this.state.userAuthenticated==true){
+                return true
+            }
+            else{
+                alert("Wrong email or password")
+                return false
+            }
         }
     }
-    navigateToHome=()=>{
-        if(this.validation())
+
+    navigateToHome=async()=>{
+        console.log("in navigateToHome...will go in validation fn");
+        if(await this.validation())
         {
-            this.state.isAdmin ? this.props.navigation.navigate("AdminHome",{username:this.state.username}) : this.props.navigation.navigate("Home",{username:this.state.username});
+            // console.log("Validation Success")
+            // console.log("USer : ",this.state.user)
+            // console.log("Message : ",this.state.user.message)
+            this.state.user.is_admin ? this.props.navigation.navigate("AdminHome",{username:this.state.user.first_name}) : this.props.navigation.navigate("Home",{username:this.state.user.first_name});
+            //console.log("After navigating to homepage")
         }
     }
     render(){
@@ -74,7 +121,7 @@ export default class Login extends Component {
                             barStyle="light-content"
                         />
                         <View>
-                        <Icon 
+                        <Icon
                             name={'ios-person'}
                             size={28}
                             color={'rgba(255,255,255,0.7)'}
@@ -83,6 +130,7 @@ export default class Login extends Component {
                         <TextInput
                             onChangeText={(value) => this.setState({username:value})}
                             placeholder={"Email"}
+                            ref={this.emailInput}
                             placeholderTextColor = 'rgba(25,255,255,0.7)'
                             keyboardType="email-address"
                             autoCapitalize="none"
@@ -90,9 +138,9 @@ export default class Login extends Component {
                             onSubmitEditing= {()=> this.passwordInput.focus()}
                             style={styles.input}
                         />
-                    </View>               
+                    </View>              
                     <View>
-                        <Icon 
+                        <Icon
                             name={'ios-lock'}
                             size={28}
                             color={'rgba(255,255,255,0.7)'}
@@ -101,12 +149,13 @@ export default class Login extends Component {
                         <TextInput
                             placeholder={"password"}
                             secureTextEntry= {this.state.showPass}
+                            ref={this.passwordInput}
                             placeholderTextColor = 'rgba(25,255,255,0.7)'
                             onChangeText={(value) => this.setState({password:value})}
                             style={styles.input}
                         />
                         <TouchableOpacity style={styles.eyeBtn} onPress={this.showPass.bind(this)}>
-                            <Icon 
+                            <Icon
                                 name={this.state.press == false ? 'ios-eye-off' : 'ios-eye' }
                                 size={26}
                                 color={'rgba(255,255,255,0.7)'}
@@ -130,7 +179,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center'  
     },
     mainView:{
-        
+       
     },
     logoContainer:{
         alignItems: "center",
@@ -151,7 +200,7 @@ const styles = StyleSheet.create({
     },
     formContainer:{
         width: Width -55,
-        height:200,   
+        height:200,  
     },
     input:{
       height:40,

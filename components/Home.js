@@ -1,47 +1,74 @@
 import Torch from 'react-native-torch';
 import React, { Component } from 'react';
-import {View, Text, Tab, Navigator, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Tab, Navigator, StyleSheet, Image, TouchableOpacity,Alert,BackHandler} from 'react-native';
 import {Button} from 'native-base';
-//import { NavigationContainer } from '@react-navigation/native';
-//import { createStackNavigator,n HeaderHeightContext } from '@react-navigation/stack';
-// import CreateSchedule from './CreateSchedule';
-// import ReportsLogs from './ReportsLogs';
+import { NavigationEvents } from 'react-navigation';
+import { useIsFocused } from '@react-navigation/native';
+
  import Panic from './Panic'
 
-export default class Home extends Component { 
+ export default class Home extends Component { 
+     
     constructor(props) {
         super(props);
         this.state = {
-            isTorchOn: false,       
+            isTorchOn: false,  
+            responseData:'',     
         };
+        console.log("In constructor")
     }
-    // panicPressed = () => {
-    //     new Panic().panicPressed();
-    // }
-    // flashPressed = () => {
-    //     alert('Flash Pressed');
-    //     const { isTorchOn } = this.state;
-    //     Torch.switchState(!isTorchOn);
-    //     this.setState({ isTorchOn: !isTorchOn });
-    // }
-    //const user_name = route.params.username;
+
+    componentDidMount() {
+        console.log("In home")
+        this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+            Alert.alert("Logout", "Are you sure you want to logout?", [{ text: "Cancel", onPress: () => {}, style: "cancel" }, { text: "Logout", onPress: () => this.UserLogout() }], { cancelable: false });
+            return true;
+        });
+    }
+
+    componentWillUnmount() {
+        console.log("Home unmount")
+        this.backHandler.remove();
+    }
+
+
+    UserLogout=async()=>{
+        await fetch("http://192.168.0.16:1234/users/logout", {
+             method: "DELETE"
+           }) 
+           .then((response) => response.text())
+           .then((responseData) => {
+             console.log(responseData)
+             this.setState({response:responseData})
+           })
+           .catch(error => console.log("Error : ",error))
+           this.props.navigation.navigate('Login')
+    }
+
+    navigateToNextScreen=(screenName,user_name)=>{
+        this.componentWillUnmount()
+        this.props.navigation.navigate(screenName, { username: user_name})
+    }
+
     render() {
         const params = this.props.route.params;
         const user_name = params.username
+       // const isFocussed = this.props.navigation.isFocused()?this.componentDidMount():this.componentWillUnmount();
         return (
             <View style={styles.container}>
-             <Button style={styles.SignOut} full rounded success onPress={()=>{this.props.navigation.navigate('Login')}}>
+             <Button style={styles.SignOut} full rounded success onPress={()=>{this.UserLogout()}}>
                     <Text style={styles.signOutText} >Sign Out</Text>
                 </Button>
                 <Text style={styles.welcome}>Hello {user_name}</Text>
                 <View style={styles.gridContainer}>
                     <View style={styles.rowContainer}>
                         <View style={styles.LeftItem}>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ClockInOut', { username: user_name, age: 16 }) }}>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ClockInOut', { username: user_name, age: 16 }) } }>
                                 <Image
                                     style={styles.image}
                                     source={require('../assets/timeClock.png')}
                                 />
+                                <Text style={styles.iconTitle}>Clock-In/Out</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.RightItem}>
@@ -50,16 +77,18 @@ export default class Home extends Component {
                                     style={styles.image}
                                     source={require('../assets/createSchedule.jpg')}
                                 />
+                                <Text style={styles.iconTitle}>View Schedule</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                     <View style={styles.bottomRowContainer}>
                         <View style={styles.LeftItem}>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('Panic', { username: user_name}) }}>
+                            <TouchableOpacity onPress={() => {this.navigateToNextScreen('Panic',user_name)}}>
                                 <Image
                                     style={styles.image}
                                     source={require('../assets/panic.png')}
                                 />
+                                <Text style={styles.iconTitle}>Emergency Button</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.RightItem}>
@@ -68,6 +97,7 @@ export default class Home extends Component {
                                     style={styles.image}
                                     source={require('../assets/reports.png')}
                                 />
+                                <Text style={styles.iconTitle}>Log Report</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -133,5 +163,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginTop:100,
         marginBottom:0,
+    },
+    iconTitle:{
+        alignSelf:"center",
+        color:'#000',
+        fontWeight:'bold',
+        fontSize: 15
     }
 });
+

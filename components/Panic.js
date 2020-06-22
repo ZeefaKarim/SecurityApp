@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Button, View, Text,TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { Button, View, Text,TouchableOpacity, StyleSheet, Image,Alert,BackHandler } from 'react-native';
 import Communications from 'react-native-communications';
 import { color } from 'react-native-reanimated';
 
@@ -10,6 +10,17 @@ export default class Panic extends React.Component{
   //   Communications.email("saimahmad1234@gmail.com",null,null,"EMERGENCY ALERT!!!","Thers is an emergency..please contact")
   //   alert('Panic Pressed now');
   // }
+
+//   componentDidMount() {
+//     this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+//         return this.props.navigation.navigate("Home");
+//     });
+// }
+
+// componentWillUnmount() {
+//     this.backHandler.remove();
+// }
+
   render(){
     const params = this.props.route.params;
     const user_name = params.username
@@ -18,7 +29,7 @@ export default class Panic extends React.Component{
         <Text style = {styles.buttonText}>Hello {user_name}</Text>    
         <Text style = {styles.buttonText}>What do you want to do???</Text>
         <View style = {styles.imageButtonContainer}>
-          <TouchableOpacity onPress={() => Communications.textWithoutEncoding('5483337140',"Thers is an emergency..please contact")}>
+          <TouchableOpacity onPress={() => Communications.textWithoutEncoding('5483337140',"There is an emergency..please contact")}>
             <Image
                 style={styles.image}
                 source={require('../assets/sms2.png')}
