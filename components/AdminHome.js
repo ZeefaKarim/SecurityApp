@@ -6,7 +6,7 @@ import {Button} from 'native-base';
 //import { createStackNavigator, HeaderHeightContext } from '@react-navigation/stack';
 // import CreateSchedule from './CreateSchedule';
 // import ReportsLogs from './ReportsLogs';
- import Panic from './Panic'
+
 
 export default class AdminHome extends Component {
     
@@ -65,7 +65,7 @@ export default class AdminHome extends Component {
                     </View>
                     <View style={styles.rowContainer}>
                         <View style={styles.LeftItem}>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('CreateSchedule', { username: user_name }) }}>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('Schedule') }}>
                                 <Image
                                     style={styles.image}
                                     source={require('../assets/createSchedule.jpg')}
