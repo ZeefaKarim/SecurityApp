@@ -2,7 +2,7 @@ import Torch from 'react-native-torch';
 import React, { Component } from 'react';
 import {View, Text, Tab, Navigator, StyleSheet, Image, TouchableOpacity,Alert,BackHandler} from 'react-native';
 import {Button} from 'native-base';
-import { NavigationEvents } from 'react-navigation';
+import { withNavigationFocus } from 'react-navigation';
 import { useIsFocused } from '@react-navigation/native';
 
  import Panic from './Panic'
@@ -20,6 +20,14 @@ import { useIsFocused } from '@react-navigation/native';
 
     componentDidMount() {
         console.log("In home")
+        this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+            Alert.alert("Logout", "Are you sure you want to logout?", [{ text: "Cancel", onPress: () => {}, style: "cancel" }, { text: "Logout", onPress: () => this.UserLogout() }], { cancelable: false });
+            return true;
+        });
+    }
+
+    componentDidAppear(){
+        console.log("In component did appear")
         this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
             Alert.alert("Logout", "Are you sure you want to logout?", [{ text: "Cancel", onPress: () => {}, style: "cancel" }, { text: "Logout", onPress: () => this.UserLogout() }], { cancelable: false });
             return true;
@@ -50,10 +58,12 @@ import { useIsFocused } from '@react-navigation/native';
         this.props.navigation.navigate(screenName, { username: user_name})
     }
 
+    
+
     render() {
         const params = this.props.route.params;
         const user_name = params.username
-       // const isFocussed = this.props.navigation.isFocused()?this.componentDidMount():this.componentWillUnmount();
+        const isFocussed = this.props.navigation.isFocused()?console.log("focussed"):console.log('notfocussed');
         return (
             <View style={styles.container}>
              <Button style={styles.SignOut} full rounded success onPress={()=>{this.UserLogout()}}>
@@ -171,4 +181,3 @@ const styles = StyleSheet.create({
         fontSize: 15
     }
 });
-

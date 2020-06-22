@@ -4,12 +4,6 @@ import Communications from 'react-native-communications';
 import { color } from 'react-native-reanimated';
 
 export default class Panic extends React.Component{
-  // panicPressed(){
-  //   Communications.textWithoutEncoding('5483337140',"Thers is an emergency..please contact")
-  //   Communications.phonecall('5483337140', true)
-  //   Communications.email("saimahmad1234@gmail.com",null,null,"EMERGENCY ALERT!!!","Thers is an emergency..please contact")
-  //   alert('Panic Pressed now');
-  // }
 
 //   componentDidMount() {
 //     this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {

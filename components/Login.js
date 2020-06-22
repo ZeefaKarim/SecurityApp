@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View,Image, ImageBackground, Dimensions, StatusBar, TouchableOpacity, TextInput } from 'react-native';
-//import LoginForm from './LoginForm.js'
+import { StyleSheet, Text, View,Image, ImageBackground, Dimensions, StatusBar, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import bgImage from '../assets/background.png'
 import logo from '../assets/logo1.png'
@@ -24,10 +23,13 @@ export default class Login extends Component {
             isAdmin: false,
             user:{},
             userAuthenticated:false,
+            isLoading:true,
 
         };
     }
-
+    componentDidMount(){
+        this.setState({isLoading:false})
+    }
       userAuthentication=async(username,password)=>{
             console.log('*************in userAuthentication fn***********************')
             await fetch("http://192.168.0.16:1234/users/login", {
@@ -43,20 +45,13 @@ export default class Login extends Component {
            })
            .then((response) => response.json())
            .then((responseData) => {
-            // console.log("Response data ",responseData)
-            // console.log("Before setting state of user",this.state.user)
-            // console.log("Before setting state of userAuthenticated",this.state.userAuthenticated)
-            //console.log("Response message : ",responseData.message)
+            this.setState({isLoading:false})
             if(responseData.message =="Incorrect Email or Password"){
                 this.setState({userAuthenticated:false})
             }
             else{
                 this.setState({user:responseData, userAuthenticated:true})
             }
-             
-            //  console.log("After setting the state")
-            //  console.log("After setting state of user",this.state.user)
-            //  console.log("After setting state of userAuthenticated",this.state.userAuthenticated)
            })
            .catch(error => console.log("Caught Error: ",error))
     }
@@ -69,19 +64,17 @@ export default class Login extends Component {
         }
     }
      validation=async() =>{
-         //console.log("in validation")
         const{
             username,password
         } = this.state
         if(username=='' || password=='')
         {
+            this.setState({isLoading:false})
             alert('Username or password cannot be empty');
             return false;
         }
         else{
-            //console.log("in validation else..going in userAuthentication")
             await this.userAuthentication(username, password)
-            //console.log("value of userAuthenticated back in validation after setting state",this.state.userAuthenticated)
             if(this.state.userAuthenticated==true){
                 return true
             }
@@ -92,18 +85,31 @@ export default class Login extends Component {
         }
     }
 
-    navigateToHome=async()=>{
+    clearFields = (emailInput,passwordInput) =>{
+        this.refs[emailInput].setNativeProps({text: ''});
+        this.refs[passwordInput].setNativeProps({text: ''});
+        this.state.email=''
+        this.state.password=''
+      }
+
+    navigateToHome=async(emailInput,passwordInput)=>{
+        this.setState({isLoading:true})
         console.log("in navigateToHome...will go in validation fn");
+        
         if(await this.validation())
         {
-            // console.log("Validation Success")
-            // console.log("USer : ",this.state.user)
-            // console.log("Message : ",this.state.user.message)
             this.state.user.is_admin ? this.props.navigation.navigate("AdminHome",{username:this.state.user.first_name}) : this.props.navigation.navigate("Home",{username:this.state.user.first_name});
-            //console.log("After navigating to homepage")
+            this.clearFields('emailInput','passwordInput')
         }
     }
     render(){
+        if(this.state.isLoading){
+            return(
+                <View style={styles.ActivityIndicatorContainer}>
+                    <ActivityIndicator size='large' color='##bc2b78'/>
+                </View>
+            )
+        }
         const { navigate } = this.props.navigation;  
         return (      
            <ImageBackground source={bgImage} style={styles.backgroundContainer}>    
@@ -130,7 +136,7 @@ export default class Login extends Component {
                         <TextInput
                             onChangeText={(value) => this.setState({username:value})}
                             placeholder={"Email"}
-                            ref={this.emailInput}
+                            ref={'emailInput'}
                             placeholderTextColor = 'rgba(25,255,255,0.7)'
                             keyboardType="email-address"
                             autoCapitalize="none"
@@ -149,7 +155,7 @@ export default class Login extends Component {
                         <TextInput
                             placeholder={"password"}
                             secureTextEntry= {this.state.showPass}
-                            ref={this.passwordInput}
+                            ref={'passwordInput'}
                             placeholderTextColor = 'rgba(25,255,255,0.7)'
                             onChangeText={(value) => this.setState({password:value})}
                             style={styles.input}
@@ -162,7 +168,7 @@ export default class Login extends Component {
                             />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.loginButtonContainer} onPress={()=>this.navigateToHome()}>
+                    <TouchableOpacity style={styles.loginButtonContainer} onPress={()=>this.navigateToHome('emailInput','passwordInput')}>
                         <Text style={styles.loginButtonText}>LOGIN</Text>
                     </TouchableOpacity>
                 </View>
@@ -229,6 +235,12 @@ const styles = StyleSheet.create({
       textAlign:"center",
       color: "#FFF",
       fontWeight: "bold"
+  },
+  ActivityIndicatorContainer:{
+      justifyContent:"center",
+      flex:1,
+      alignItems:"center",
+
   }
   });
 

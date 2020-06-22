@@ -2,11 +2,6 @@ import Torch from 'react-native-torch';
 import React, { Component } from 'react';
 import {View, Text, Tab, Navigator, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import {Button} from 'native-base';
-//import { NavigationContainer } from '@react-navigation/native';
-//import { createStackNavigator, HeaderHeightContext } from '@react-navigation/stack';
-// import CreateSchedule from './CreateSchedule';
-// import ReportsLogs from './ReportsLogs';
-
 
 export default class AdminHome extends Component {
     
